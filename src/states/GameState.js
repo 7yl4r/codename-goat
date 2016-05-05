@@ -36,21 +36,13 @@ class GameState extends Phaser.State {
 
     update() {
         this.inputHandler.update();
-        //Position and size the world
-        // this.game.world.setBounds(
-        //     this.game.player.position.x - this.game.width/2,
-        //     this.game.player.position.y - this.game.height/2,
-        //     this.game.width,
-        //     this.game.height
-        // );
-
-        //Move the tilesprite (fixed to camera) depending on the player's positiontile
-        // this.background.tilePosition.y = -this.game.camera.view.y;
-
+        this.background.update();
     }
 
     render() {
         this.game.debug.spriteCoords(this.game.player, 32, 32);
+        this.game.debug.spriteCoords(this.background, 32, 200);
+
         this.game.debug.cameraInfo(this.game.camera, 500, 32);
     }
 }
