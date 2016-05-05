@@ -1,22 +1,58 @@
-class Player {
-
+class Player extends Phaser.Sprite{
 	constructor(game, x, y) {
-
-		// super(game, x, y, text, { font: "45px Arial", fill: "#ff0044", align: "center" });
+		super(game, x, y, 'player');
         this.game = game;
-        this.x = x;
-        this.y = y;
-        this.sprite = this.game.add.sprite(
-            this.x,
-            this.y,
-            'player'
-        );
+        // this.sprite = this.game.add.sprite(
+        //     this.x,
+        //     this.y,
+        //     'player'
+        // );
+        this.facing = 'left';
+        this.jumpTimer = 0;
+        this.game.physics.arcade.enable(this);
 
-		this._speed = 125; //ms
-		this._colorIndex = 0;
+        this.body.collideWorldBounds = true;
 
-		this.game.stage.addChild(this.sprite);
+		this.game.world.addChild(this);
 	}
+
+    faceLeft(){
+        if (this.facing != 'left')
+        {
+            this.animations.play('left');
+            this.facing = 'left';
+        }
+    }
+    faceRight(){
+        if (this.facing != 'right')
+        {
+            this.animations.play('right');
+            this.facing = 'right';
+        }
+    }
+    idle(){
+        if (this.facing != 'idle')
+        {
+            this.animations.stop();
+
+            if (this.facing == 'left')
+            {
+                this.frame = 0;
+            }
+            else
+            {
+                this.frame = 5;
+            }
+
+            this.facing = 'idle';
+        }
+    }
+    jump(){
+        if(this.body.onFloor() && this.game.time.now > this.jumpTimer){
+            this.body.velocity.y = -250;
+            this.jumpTimer = this.game.time.now + 750;
+        }
+    }
 }
 
 export default Player;
