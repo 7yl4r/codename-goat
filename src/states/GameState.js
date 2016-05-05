@@ -7,10 +7,14 @@ class GameState extends Phaser.State {
 
     preload() {
         this.game.load.image('backdrop', 'ass/pics/DistantCity/PNG/1920x1080.png');
+        this.game.load.spritesheet('player', 'ass/sprites/goat.png', 128, 128);
+
         this.game.load.image('player', 'ass/sprites/1goat.png');
         this.game.load.image('baddie1', 'ass/sprites/x.png');
 
         this.inputHandler = new PlayerInputHandler(this.game);
+
+        this.game.time.desiredFps = 30;
 
         this.obstacles = [];
     }

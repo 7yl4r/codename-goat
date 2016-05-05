@@ -2,14 +2,20 @@ class Player extends Phaser.Sprite{
 	constructor(game, x, y) {
 		super(game, x, y, 'player');
         this.game = game;
-        // this.sprite = this.game.add.sprite(
-        //     this.x,
-        //     this.y,
-        //     'player'
-        // );
-        this.facing = 'left';
+
         this.jumpTimer = 0;
         this.game.physics.arcade.enable(this);
+        this.body.bounce.y = 0.2;
+        this.body.collideWorldBounds = true;
+        // this.body.setSize(20, 32, 5, 16); // TODO: ???
+
+        this.animations.add('left', [4, 5, 6, 7 ], 10, true);
+        this.animations.add('turn', [8], 10, true);
+        this.animations.add('right', [12, 13, 14, 15], 10, true);
+        this.animations.add('left-idle',  [20,21,22,23,23,23,22,21,20], 3, true);
+        this.animations.add('right-idle', [28,29,30,31,31,31,30,29,28], 3, true);
+
+        this.facing = 'left';
 
         this.body.collideWorldBounds = true;
 
@@ -31,19 +37,17 @@ class Player extends Phaser.Sprite{
         }
     }
     idle(){
-        if (this.facing != 'idle')
+        if (this.facing != 'idle' && this.body.onFloor())
         {
-            this.animations.stop();
 
             if (this.facing == 'left')
             {
-                this.frame = 0;
+                this.animations.play('left-idle');
             }
             else
             {
-                this.frame = 5;
+                this.animations.play('right-idle');
             }
-
             this.facing = 'idle';
         }
     }
