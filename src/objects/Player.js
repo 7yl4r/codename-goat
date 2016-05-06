@@ -9,9 +9,9 @@ class Player extends Phaser.Sprite{
         this.body.collideWorldBounds = true;
         // this.body.setSize(20, 32, 5, 16); // TODO: ???
 
-        this.animations.add('left', [4, 5, 6, 7 ], 10, true);
+        this.animations.add('left', [7,6,5,4], 10, true);
         this.animations.add('turn', [8], 10, true);
-        this.animations.add('right', [12, 13, 14, 15], 10, true);
+        this.animations.add('right', [15,14,13,12], 10, true);
         this.animations.add('left-idle',  [20,21,22,23,23,23,22,21,20], 3, true);
         this.animations.add('right-idle', [28,29,30,31,31,31,30,29,28], 3, true);
 
