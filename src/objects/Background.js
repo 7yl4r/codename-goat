@@ -4,13 +4,8 @@ class Background {
         this.game = game;
 
         this.groundHeight = 200;
-        this.w = 1920;  // TODO: get these values from map
-        this.h = 1080;
-        // this.tilePosition.y = 1080 - this.groundHeight;
-        // this.tilePosition.x = game.width/2;
 
-
-        //  The 'mario' key here is the Loader key given in game.load.tilemap
+        //  The 'lvl1' key here is the Loader key given in game.load.tilemap
         this.map = this.game.add.tilemap('lvl1');
 
         //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
@@ -19,36 +14,58 @@ class Background {
 
         //  Creates a layer from the World1 layer in the map data.
         //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
-        this.layers = [this.map.createLayer('background1')];
+        let w = 5;  // width of tilemap in # of panels
+        let scrollFactors = [
+            {
+                name:'bgsky',
+                scrollFactorX: 0
+            },{
+                name:'bg4',
+                scrollFactorX: 1/w
+            },{
+                name:'bg3',
+                scrollFactorX: 2/w
+            },{
+                name:'bg2',
+                scrollFactorX: 3/w
+            },{
+                name:'bg1',
+                scrollFactorX: 4/w
+            },{
+                name:'bg0b',
+                scrollFactorX: 1
+            },
+            {
+                name:'bg0a',
+                scrollFactorX: 1
+            }
+        ];
+
+        this.layers = [];
+        for (var layer of scrollFactors){
+            // console.log("layer " + layer.name + " scrollX:" + layer.scrollFactorX);
+            this.layers.push(this.map.createLayer(layer.name));
+            this.layers[this.layers.length-1].scrollFactorX = layer.scrollFactorX;
+        }
         this.layers[0].resizeWorld();
-        this.layers[0].scrollFactorX = 0.5;
-        console.log(this.layers[0]);
 
-        this.layers.push(this.map.createLayer('background0'));
-
-
-        // this.game.world.addChild(this);
-
-        this.game.world.setBounds(0, -this.groundHeight, this.w, this.h);
+        this.game.world.setBounds(0, -this.groundHeight, this.width(), this.height());
 	}
 
-    update(){
-        // this.tilePosition.x = -this.game.camera.x;
-        // this.x = this.game.camera.x;
-        //
-        // this.tilePosition.y = -this.game.camera.y;
-        // this.y = this.game.camera.y;
+    width(newWidth){
+        if (newWidth && newWidth > 0){
+            console.error("NYI set bg width");
+        } else {
+            return this.map.widthInPixels;
+        }
+    }
 
-        //Position and size the world
-        // this.game.world.setBounds(
-        //     0,
-        //     -this.groundHeight, //this.game.player.position.y - this.game.height/2,
-        //     this.game.world.width,
-        //     this.game.world.height
-        // );
-
-        //Move the tilesprite (fixed to camera) depending on the player's positiontile
-        // this.background.tilePosition.y = -this.game.camera.view.y;
+    height(newHeight){
+        if (newHeight && newHeight > 0){
+            console.error("NYI set bg height");
+        } else {
+            return this.map.heightInPixels;
+        }
     }
 }
 
