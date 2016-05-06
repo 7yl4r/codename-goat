@@ -1,7 +1,9 @@
 import Player from 'objects/Player';
 import Obstacle from 'objects/Obstacle';
-import KeyboardHandler from 'objects/KeyboardHandler';
 import Background from 'objects/Background';
+import ActionSelectorHUD from 'objects/ActionSelectorHUD';
+
+let DEBUG = true;
 
 class GameState extends Phaser.State {
 
@@ -15,9 +17,10 @@ class GameState extends Phaser.State {
 
         this.game.load.image('baddie1', 'ass/sprites/x.png');
 
-        this.inputHandler = new KeyboardHandler(this.game);
-
         this.game.time.desiredFps = 30;
+        this.game.time.advancedTiming = DEBUG;
+
+        this.actionHUD = new ActionSelectorHUD(this.game);
 
         this.obstacles = [];
     }
@@ -29,6 +32,7 @@ class GameState extends Phaser.State {
         this.background = new Background(this.game);
 
         this.game.player = new Player(this.game, center.x, center.y);
+        this.actionHUD.create();
 
         this.game.camera.follow(this.game.player, this.game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
         // let pad = 100;
@@ -44,15 +48,20 @@ class GameState extends Phaser.State {
 	}
 
     update() {
-        this.inputHandler.update();
+        this.game.player.update();
+        this.actionHUD.update();
         // this.background.update();
     }
 
     render() {
-        this.game.debug.spriteCoords(this.game.player, 32, 32);
-        // this.game.debug.spriteCoords(this.background, 32, 200);
+        if (DEBUG){
+            this.game.debug.spriteCoords(this.game.player, 32, 32);
+            this.game.debug.spriteCoords(this.actionHUD.sprite, 32, 200);
 
-        this.game.debug.cameraInfo(this.game.camera, 500, 32);
+            this.game.debug.cameraInfo(this.game.camera, 500, 32);
+
+            this.game.debug.text(this.game.time.fps || '--', 2, 14, "#00ff00");
+        }
     }
 }
 

@@ -1,4 +1,11 @@
-class Player extends Phaser.Sprite{
+import KeyboardHandler from 'objects/KeyboardHandler';
+import PlayerInputHandler from 'objects/PlayerInputHandler';
+
+let MIN_TURN_TIME = 200;
+let MIN_JUMP_TIME = 750;
+let TIME_UNTIL_IDLE = 1000;
+
+class Player extends Phaser.Sprite {
 	constructor(game, x, y) {
 		super(game, x, y, 'player');
         this.game = game;
@@ -19,31 +26,33 @@ class Player extends Phaser.Sprite{
         this.idleBool = false;
         this.idleTimer = 0;
 
+        this.turnTimer = 0;
+
         this.body.collideWorldBounds = true;
 
-		this.game.world.addChild(this);
-	}
+        this.inputHandler = new PlayerInputHandler(this.game);
+        this.keyboardHandler = new KeyboardHandler(this.game, this.inputHandler);
+
+        this.game.world.addChild(this);
+    }
+
+    update(){
+        // this.inputHandler.update();
+        this.keyboardHandler.update();
+    }
 
     turn(){
-        if (this.facing == 'right'){
-            this.faceLeft();
-        } else {
-            this.faceRight();
+        if(this.game.time.now > this.turnTimer){
+            console.log('turn');
+            if (this.facing == 'right'){
+                this.facing = 'left';
+            } else {
+                this.facing = 'right';
+            }
+            this.turnTimer = this.game.time.now + MIN_TURN_TIME;
         }
     }
 
-    faceLeft(){
-        if (this.facing != 'left')
-        {
-            this.facing = 'left';
-        }
-    }
-    faceRight(){
-        if (this.facing != 'right')
-        {
-            this.facing = 'right';
-        }
-    }
     idle(){
         if (!this.idleBool && this.body.onFloor()){
             if(this.game.time.now > this.idleTimer){
@@ -58,14 +67,14 @@ class Player extends Phaser.Sprite{
                 this.idleBool = true;
             }
         } else {
-            this.idleTimer = this.game.time.now + 1000;
+            this.idleTimer = this.game.time.now + TIME_UNTIL_IDLE;
             this.idleBool = false;
         }
     }
     jump(){
         if(this.body.onFloor() && this.game.time.now > this.jumpTimer){
             this.body.velocity.y = -250;
-            this.jumpTimer = this.game.time.now + 750;
+            this.jumpTimer = this.game.time.now + MIN_JUMP_TIME;
         }
     }
     walk(){

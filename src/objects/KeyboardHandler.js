@@ -1,9 +1,7 @@
-import PlayerInputHandler from 'objects/PlayerInputHandler';
-
 class KeyboardHandler {
-	constructor(game) {
+	constructor(game, inputHandler) {
         this.game = game;
-        this.inputHandler = new PlayerInputHandler(game);
+        this.inputHandler = inputHandler;
         this.cursors = game.input.keyboard.addKeys({
             'action': Phaser.Keyboard.SPACEBAR,
             'left': Phaser.Keyboard.LEFT,
