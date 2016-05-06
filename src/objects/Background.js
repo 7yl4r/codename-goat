@@ -20,6 +20,9 @@ class Background {
                 name:'bgsky',
                 scrollFactorX: 0
             },{
+                name:'bgclouds',
+                scrollFactorX:0
+            },{
                 name:'bg4',
                 scrollFactorX: 1/w
             },{

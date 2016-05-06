@@ -3,17 +3,22 @@
  <tileset firstgid="1" name="sprites" tilewidth="1920" tileheight="1080">
   <image source="../pics/DistantCity/PALALLAX/1920x1080/sprites.png" width="1920" height="8640"/>
  </tileset>
- <layer name="bgsky" width="5" height="1" visible="0">
+ <layer name="bgsky" width="5" height="1">
+  <data encoding="base64" compression="zlib">
+   eJzjYMAEAAC0AAk=
+  </data>
+ </layer>
+ <layer name="bgclouds" width="5" height="1">
   <data encoding="base64" compression="zlib">
    eJxjZ8AEAACgAAg=
   </data>
  </layer>
- <layer name="bg4" width="5" height="1" visible="0">
+ <layer name="bg4" width="5" height="1">
   <data encoding="base64" compression="zlib">
    eJxjY8AEAACMAAc=
   </data>
  </layer>
- <layer name="bg3" width="5" height="1" visible="0">
+ <layer name="bg3" width="5" height="1">
   <data encoding="base64" compression="zlib">
    eJxjZcAEAAB4AAY=
   </data>
@@ -23,7 +28,7 @@
    eJxjYWBgYIFiGAAAANQADQ==
   </data>
  </layer>
- <layer name="bg1" width="5" height="1" visible="0">
+ <layer name="bg1" width="5" height="1">
   <properties>
    <property name="scrollFactorX" value=".75"/>
   </properties>
@@ -31,7 +36,7 @@
    eJxjZmBgYEbCIAAAALwADQ==
   </data>
  </layer>
- <layer name="bg0b" width="5" height="1" visible="0">
+ <layer name="bg0b" width="5" height="1">
   <properties>
    <property name="scrollFactorX" value="1"/>
   </properties>
@@ -39,7 +44,7 @@
    eJxjYmBgYELDAACMAAs=
   </data>
  </layer>
- <layer name="bg0a" width="5" height="1" visible="0">
+ <layer name="bg0a" width="5" height="1">
   <properties>
    <property name="scrollFactorX" value="1"/>
   </properties>

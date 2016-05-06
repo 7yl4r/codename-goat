@@ -1,12 +1,23 @@
 { "height":1,
  "layers":[
         {
-         "data":[7, 0, 0, 0, 0],
+         "data":[8, 0, 0, 0, 0],
          "height":1,
          "name":"bgsky",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
+         "width":5,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[7, 0, 0, 0, 0],
+         "height":1,
+         "name":"bgclouds",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
          "width":5,
          "x":0,
          "y":0
@@ -17,7 +28,7 @@
          "name":"bg4",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":5,
          "x":0,
          "y":0
@@ -28,7 +39,7 @@
          "name":"bg3",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":5,
          "x":0,
          "y":0
@@ -54,7 +65,7 @@
              "scrollFactorX":".75"
             },
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":5,
          "x":0,
          "y":0
@@ -69,7 +80,7 @@
              "scrollFactorX":"1"
             },
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":5,
          "x":0,
          "y":0
@@ -84,7 +95,7 @@
              "scrollFactorX":"1"
             },
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":5,
          "x":0,
          "y":0
