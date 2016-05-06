@@ -1,35 +1,42 @@
 class PlayerInputHandler {
 	constructor(game) {
         this.game = game;
-        this.cursors = this.game.input.keyboard.createCursorKeys();
-        this.jumpButton = this.cursors.up;
+        this.actions = ['jump', 'walk', 'turn'];
+        this.selectedActionIndex = 0;
 	}
 
-    update(){
-        this.game.player.body.velocity.x = 0;
-
-        if (this.cursors.left.isDown)
-        {
-            this.game.player.body.velocity.x = -150;
-
-            this.game.player.faceLeft();
+    action(){
+        switch (this.actions[this.selectedActionIndex]){
+            case 'jump':
+                this.game.player.jump();
+                break;
+            case 'walk':
+                this.game.player.walk();
+                break;
+            case 'turn':
+                this.game.player.turn();
+                break;
+            default:
+                console.error("unrecognized action: " + this.selectedAction);
         }
-        else if (this.cursors.right.isDown)
-        {
-            this.game.player.body.velocity.x = 150;
+    }
 
-            this.game.player.faceRight();
-        }
-        else
-        {
-            this.game.player.idle();
-        }
+    nextAction(){
+        this.selectedActionIndex += 1;
+        this._checkIndex();
+    }
 
-        if (this.jumpButton.isDown)
-        {
-            this.game.player.jump();
-        }
+    previousAction(){
+        this.selectedActionIndex -=1;
+        this._checkIndex();
+    }
 
+    _checkIndex(){
+        if (this.selectedActionIndex >= this.actions.length){
+            this.selectedActionIndex = 0;
+        } else if (this.selectedActionIndex < 0){
+            this.selectedActionIndex = this.actions.length-1;
+        }
     }
 }
 

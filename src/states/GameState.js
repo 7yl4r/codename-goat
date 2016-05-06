@@ -1,6 +1,6 @@
 import Player from 'objects/Player';
 import Obstacle from 'objects/Obstacle';
-import PlayerInputHandler from 'objects/PlayerInputHandler';
+import KeyboardHandler from 'objects/KeyboardHandler';
 import Background from 'objects/Background';
 
 class GameState extends Phaser.State {
@@ -15,7 +15,7 @@ class GameState extends Phaser.State {
 
         this.game.load.image('baddie1', 'ass/sprites/x.png');
 
-        this.inputHandler = new PlayerInputHandler(this.game);
+        this.inputHandler = new KeyboardHandler(this.game);
 
         this.game.time.desiredFps = 30;
 

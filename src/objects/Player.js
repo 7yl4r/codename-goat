@@ -16,45 +16,67 @@ class Player extends Phaser.Sprite{
         this.animations.add('right-idle', [28,29,30,31,31,31,30,29,28], 3, true);
 
         this.facing = 'left';
+        this.idleBool = false;
+        this.idleTimer = 0;
 
         this.body.collideWorldBounds = true;
 
 		this.game.world.addChild(this);
 	}
 
+    turn(){
+        if (this.facing == 'right'){
+            this.faceLeft();
+        } else {
+            this.faceRight();
+        }
+    }
+
     faceLeft(){
         if (this.facing != 'left')
         {
-            this.animations.play('left');
             this.facing = 'left';
         }
     }
     faceRight(){
         if (this.facing != 'right')
         {
-            this.animations.play('right');
             this.facing = 'right';
         }
     }
     idle(){
-        if (this.facing != 'idle' && this.body.onFloor())
-        {
-
-            if (this.facing == 'left')
-            {
-                this.animations.play('left-idle');
+        if (!this.idleBool && this.body.onFloor()){
+            if(this.game.time.now > this.idleTimer){
+                if (this.facing == 'left')
+                {
+                    this.animations.play('left-idle');
+                }
+                else
+                {
+                    this.animations.play('right-idle');
+                }
+                this.idleBool = true;
             }
-            else
-            {
-                this.animations.play('right-idle');
-            }
-            this.facing = 'idle';
+        } else {
+            this.idleTimer = this.game.time.now + 1000;
+            this.idleBool = false;
         }
     }
     jump(){
         if(this.body.onFloor() && this.game.time.now > this.jumpTimer){
             this.body.velocity.y = -250;
             this.jumpTimer = this.game.time.now + 750;
+        }
+    }
+    walk(){
+        if (this.facing == 'right'){
+            this.game.player.body.velocity.x = 150;
+            this.animations.play('right');
+        } else if (this.facing == 'left'){
+            this.game.player.body.velocity.x = -150;
+            this.animations.play('left');
+        } else {
+            console.warn('cannot walk when facing' + this.facing);
         }
     }
 }
