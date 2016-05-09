@@ -15,24 +15,26 @@ class Player extends Phaser.Sprite {
         this.body.bounce.y = 0.2;
         this.body.collideWorldBounds = true;
         // this.body.setSize(20, 32, 5, 16); // TODO: ???
+        this.facing = 'left';
+        this.idleBool = false;
+        this.idleTimer = 0;
+        this.turnTimer = 0;
+        this.body.collideWorldBounds = true;
+        preload();
+    }
 
+    preload(){
+        this.game.load.spritesheet('player', 'ass/sprites/goat.png', 128, 128);
         this.animations.add('left', [7,6,5,4], 10, true);
         this.animations.add('turn', [8], 10, true);
         this.animations.add('right', [15,14,13,12], 10, true);
         this.animations.add('left-idle',  [20,21,22,23,23,23,22,21,20], 3, true);
         this.animations.add('right-idle', [28,29,30,31,31,31,30,29,28], 3, true);
-
-        this.facing = 'left';
-        this.idleBool = false;
-        this.idleTimer = 0;
-
-        this.turnTimer = 0;
-
-        this.body.collideWorldBounds = true;
-
         this.inputHandler = new PlayerInputHandler(this.game);
         this.keyboardHandler = new KeyboardHandler(this.game, this.inputHandler);
+    }
 
+    create(){
         this.game.world.addChild(this);
     }
 

@@ -13,14 +13,13 @@ class GameState extends Phaser.State {
 
         this.game.load.image('backdrop', 'ass/pics/DistantCity/PNG/1920x1080.png');
 
-        this.game.load.spritesheet('player', 'ass/sprites/goat.png', 128, 128);
-
         this.game.load.image('baddie1', 'ass/sprites/x.png');
 
         this.game.time.desiredFps = 30;
         this.game.time.advancedTiming = DEBUG;
 
         this.actionHUD = new ActionSelectorHUD(this.game);
+        this.game.player = new Player(this.game, center.x, center.y);
 
         this.obstacles = [];
     }
@@ -30,8 +29,8 @@ class GameState extends Phaser.State {
 
         // this.game.stage.backgroundColor = '#787878';s
         this.background = new Background(this.game);
+        this.game.player.create();
 
-        this.game.player = new Player(this.game, center.x, center.y);
         this.actionHUD.create();
 
         this.game.camera.follow(this.game.player, this.game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
