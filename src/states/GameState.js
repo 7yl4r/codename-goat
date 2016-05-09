@@ -8,16 +8,12 @@ let DEBUG = true;
 class GameState extends Phaser.State {
 
     preload() {
-        this.game.load.tilemap('lvl1', 'ass/tilemaps/2-layer-city.json', null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.image('tilesprites', 'ass/pics/DistantCity/PALALLAX/1920x1080/sprites.png');
-
-        this.game.load.image('backdrop', 'ass/pics/DistantCity/PNG/1920x1080.png');
-
         this.game.load.image('baddie1', 'ass/sprites/x.png');
 
         this.game.time.desiredFps = 30;
         this.game.time.advancedTiming = DEBUG;
 
+        this.background = new Background(this.game);
         this.actionHUD = new ActionSelectorHUD(this.game);
         this.game.player = new Player(this.game, center.x, center.y);
 
@@ -27,8 +23,7 @@ class GameState extends Phaser.State {
 	create() {
 		let center = { x: this.game.world.centerX, y: this.game.world.centerY };
 
-        // this.game.stage.backgroundColor = '#787878';s
-        this.background = new Background(this.game);
+        this.background.create();
         this.game.player.create();
 
         this.actionHUD.create();
