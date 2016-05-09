@@ -1,8 +1,6 @@
 class Obstacle {
 
-	constructor(game, x, y, text) {
-
-		// super(game, x, y, text, { font: "45px Arial", fill: "#ff0044", align: "center" });
+	constructor(game, x, y) {
         this.game = game;
 
         var s = this.game.add.sprite(

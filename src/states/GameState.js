@@ -2,6 +2,7 @@ import Player from 'objects/Player';
 import Obstacle from 'objects/Obstacle';
 import Background from 'objects/Background';
 import ActionSelectorHUD from 'objects/ActionSelectorHUD';
+import GoatCamCtrl from 'objects/GoatCamCtrl';
 
 let DEBUG = true;
 
@@ -9,28 +10,23 @@ class GameState extends Phaser.State {
 
     preload() {
         this.game.load.image('baddie1', 'ass/sprites/x.png');
+        this.obstacles = [];
 
         this.game.time.desiredFps = 30;
         this.game.time.advancedTiming = DEBUG;
 
         this.background = new Background(this.game);
         this.actionHUD = new ActionSelectorHUD(this.game);
-        this.game.player = new Player(this.game, center.x, center.y);
-
-        this.obstacles = [];
+        this.game.player = new Player(this.game,
+            this.game.world.centerX, this.game.world.centerY);
+        this.camCtrl = new GoatCamCtrl(this.game);
     }
 
 	create() {
-		let center = { x: this.game.world.centerX, y: this.game.world.centerY };
-
         this.background.create();
         this.game.player.create();
-
         this.actionHUD.create();
-
-        this.game.camera.follow(this.game.player, this.game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
-        // let pad = 100;
-        // this.game.camera.deadzone = new Phaser.Rectangle(pad, pad, this.game.width-pad, this.game.height-pad);
+        this.cameCtrl.create();
 
         this.game.physics.arcade.gravity.y = 250;
 
@@ -44,7 +40,6 @@ class GameState extends Phaser.State {
     update() {
         this.game.player.update();
         this.actionHUD.update();
-        // this.background.update();
     }
 
     render() {
