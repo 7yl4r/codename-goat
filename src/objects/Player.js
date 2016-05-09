@@ -5,37 +5,46 @@ let MIN_TURN_TIME = 200;
 let MIN_JUMP_TIME = 750;
 let TIME_UNTIL_IDLE = 1000;
 
-class Player extends Phaser.Sprite {
+class Player extends Phaser.Sprite{
 	constructor(game, x, y) {
-		super(game, x, y, 'player');
+        super(game, x, y)
         this.game = game;
-
-        this.jumpTimer = 0;
-        this.game.physics.arcade.enable(this);
-        this.body.bounce.y = 0.2;
-        this.body.collideWorldBounds = true;
-        // this.body.setSize(20, 32, 5, 16); // TODO: ???
-        this.facing = 'left';
+        // this.signals = {
+        //     // TODO: player signals here
+        // };
+        this.facing = 'right';
         this.idleBool = false;
         this.idleTimer = 0;
         this.turnTimer = 0;
-        this.body.collideWorldBounds = true;
-        preload();
+        this.jumpTimer = 0;
+        this.preload();
     }
 
     preload(){
         this.game.load.spritesheet('player', 'ass/sprites/goat.png', 128, 128);
-        this.animations.add('left', [7,6,5,4], 10, true);
-        this.animations.add('turn', [8], 10, true);
-        this.animations.add('right', [15,14,13,12], 10, true);
-        this.animations.add('left-idle',  [20,21,22,23,23,23,22,21,20], 3, true);
-        this.animations.add('right-idle', [28,29,30,31,31,31,30,29,28], 3, true);
         this.inputHandler = new PlayerInputHandler(this.game);
         this.keyboardHandler = new KeyboardHandler(this.game, this.inputHandler);
     }
 
     create(){
+        this.loadTexture('player');
+        this.game.physics.arcade.enable(this);
+
+        this.animations.add('left-walk', [7,6,5,4], 10, true);
+        this.animations.add('turn', [8], 1, true);
+        this.animations.add('left', [20], 10, true);
+        this.animations.add('right', [28], 10, true);
+        this.animations.add('right-walk', [15,14,13,12], 10, true);
+        this.animations.add('left-idle',  [20,21,22,23,23,23,22,21,20], 3, true);
+        this.animations.add('right-idle', [28,29,30,31,31,31,30,29,28], 3, true);
+
         this.game.world.addChild(this);
+
+        this.body.drag.x = 50;
+        this.body.bounce.y = 0.2;
+        this.body.collideWorldBounds = true;
+        // this.body.setSize(20, 32, 5, 16); // TODO: ???
+        this.animations.play('right');
     }
 
     update(){
@@ -51,6 +60,12 @@ class Player extends Phaser.Sprite {
             } else {
                 this.facing = 'right';
             }
+
+            this.animations.play('turn');
+            this.animations.currentAnim.onComplete.add(function () {
+                this.animations.play(this.facing);
+            });
+
             this.turnTimer = this.game.time.now + MIN_TURN_TIME;
         }
     }
@@ -81,11 +96,11 @@ class Player extends Phaser.Sprite {
     }
     walk(){
         if (this.facing == 'right'){
-            this.game.player.body.velocity.x = 150;
-            this.animations.play('right');
+            this.body.velocity.x = 150;
+            this.animations.play('right-walk');
         } else if (this.facing == 'left'){
-            this.game.player.body.velocity.x = -150;
-            this.animations.play('left');
+            this.body.velocity.x = -150;
+            this.animations.play('left-walk');
         } else {
             console.warn('cannot walk when facing' + this.facing);
         }

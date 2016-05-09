@@ -10,7 +10,7 @@ class KeyboardHandler {
 	}
 
     update(){
-        this.game.player.body.velocity.x = 0;
+        //this.game.player.body.velocity.x = 0;
 
         if (this.cursors.action.isDown){
             this.inputHandler.action();

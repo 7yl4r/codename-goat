@@ -4,14 +4,14 @@ class Background {
         this.game = game;
 
         this.groundHeight = 200;
-        preload();
+        this.preload();
 
         // this.game.stage.backgroundColor = '#787878';s
 
         //  Creates a layer from the World1 layer in the map data.
         //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
         let w = 5;  // width of tilemap in # of panels
-        let scrollFactors = [
+        this.scrollFactors = [
             {
                 name:'bgsky',
                 scrollFactorX: 0
@@ -46,17 +46,17 @@ class Background {
     preload(){
         this.game.load.tilemap('lvl1', 'ass/tilemaps/2-layer-city.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tilesprites', 'ass/pics/DistantCity/PALALLAX/1920x1080/sprites.png');
+    }
 
+    create(){
         //  The 'lvl1' key here is the Loader key given in game.load.tilemap
         this.map = this.game.add.tilemap('lvl1');
 
         //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
         this.map.addTilesetImage('sprites', 'tilesprites');
         //  The second parameter maps this name to the Phaser.Cache key 'tiles'
-    }
 
-    create(){
-        for (var layer of scrollFactors){
+        for (var layer of this.scrollFactors){
             // console.log("layer " + layer.name + " scrollX:" + layer.scrollFactorX);
             this.layers.push(this.map.createLayer(layer.name));
             this.layers[this.layers.length-1].scrollFactorX = layer.scrollFactorX;

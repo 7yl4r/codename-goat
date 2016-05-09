@@ -26,7 +26,7 @@ class GameState extends Phaser.State {
         this.background.create();
         this.game.player.create();
         this.actionHUD.create();
-        this.cameCtrl.create();
+        this.camCtrl.create();
 
         this.game.physics.arcade.gravity.y = 250;
 
@@ -44,9 +44,12 @@ class GameState extends Phaser.State {
 
     render() {
         if (DEBUG){
-            this.game.debug.spriteCoords(this.game.player, 32, 32);
-            this.game.debug.spriteCoords(this.actionHUD.sprite, 32, 200);
-
+            if (this.game.player){
+                this.game.debug.spriteCoords(this.game.player, 32, 32);
+            }
+            if (this.actionHUD.sprite){
+                this.game.debug.spriteCoords(this.actionHUD.sprite, 32, 200);
+            }
             this.game.debug.cameraInfo(this.game.camera, 500, 32);
 
             this.game.debug.text(this.game.time.fps || '--', 2, 14, "#00ff00");
