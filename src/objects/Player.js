@@ -31,9 +31,10 @@ class Player extends Phaser.Sprite{
         this.game.physics.arcade.enable(this);
 
         this.animations.add('left-walk', [7,6,5,4], 10, true);
-        this.animations.add('turn', [8], 1, true);
-        this.animations.add('left', [20], 10, true);
-        this.animations.add('right', [28], 10, true);
+        this.animations.add('turn-left',  [28, 24, 20], 5, false);
+        this.animations.add('turn-right', [20, 16, 28], 5, false);
+        this.animations.add('left', [20], 10, false);
+        this.animations.add('right', [28], 10, false);
         this.animations.add('right-walk', [15,14,13,12], 10, true);
         this.animations.add('left-idle',  [20,21,22,23,23,23,22,21,20], 3, true);
         this.animations.add('right-idle', [28,29,30,31,31,31,30,29,28], 3, true);
@@ -60,11 +61,7 @@ class Player extends Phaser.Sprite{
             } else {
                 this.facing = 'right';
             }
-
-            this.animations.play('turn');
-            this.animations.currentAnim.onComplete.add(function () {
-                this.animations.play(this.facing);
-            });
+            this.animations.play('turn-'+this.facing);
 
             this.turnTimer = this.game.time.now + MIN_TURN_TIME;
         }
