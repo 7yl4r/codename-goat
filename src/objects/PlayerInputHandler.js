@@ -26,7 +26,7 @@ class PlayerInputHandler {
 
     selectAction(newIndex){
         if(this.game.time.now > this.switchTimer){
-            console.log('indexCheck('+newIndex+')='+this._checkIndex(newIndex))
+            // console.log('indexCheck('+newIndex+')='+this._checkIndex(newIndex))
             newIndex = this._checkIndex(newIndex);
             // console.log('action change : ' + this.actions[this.selectedActionIndex] + '->' + this.actions[newIndex]);
             this.selectedActionIndex = newIndex;

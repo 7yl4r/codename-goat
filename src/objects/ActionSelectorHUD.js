@@ -15,7 +15,8 @@ class ActionSelectorHUD {
 
     create(){
         this.x = this.game.width/2 - this.spriteW/2;
-        this.y = this.game.height-this.pad-this.spriteW;
+        this.y = this.pad+this.spriteW;  // top-mid
+        // this.y = this.game.height-this.pad-this.spriteW;  // bottom-mid
         this._updateSprite();
     }
 

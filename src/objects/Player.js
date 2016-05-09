@@ -43,7 +43,7 @@ class Player extends Phaser.Sprite {
 
     turn(){
         if(this.game.time.now > this.turnTimer){
-            console.log('turn');
+            // console.log('turn');
             if (this.facing == 'right'){
                 this.facing = 'left';
             } else {
