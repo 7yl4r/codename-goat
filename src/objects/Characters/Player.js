@@ -1,18 +1,14 @@
 import KeyboardHandler from 'objects/KeyboardHandler';
 import PlayerInputHandler from 'objects/PlayerInputHandler';
+import Character from 'objects/Characters/Character';
 
 let MIN_TURN_TIME = 200;
 let MIN_JUMP_TIME = 750;
 let TIME_UNTIL_IDLE = 1000;
 
-class Player extends Phaser.Sprite{
+class Player extends Character{
 	constructor(game, x, y) {
-        super(game, x, y)
-        this.game = game;
-        // this.signals = {
-        //     // TODO: player signals here
-        // };
-        this.facing = 'right';
+        super(game, x, y, 'player', 'ass/sprites/goat.png', 128, 128)
         this.idleBool = false;
         this.idleTimer = 0;
         this.turnTimer = 0;
@@ -21,13 +17,13 @@ class Player extends Phaser.Sprite{
     }
 
     preload(){
-        this.game.load.spritesheet('player', 'ass/sprites/goat.png', 128, 128);
+        super.preload();
         this.inputHandler = new PlayerInputHandler(this.game);
         this.keyboardHandler = new KeyboardHandler(this.game, this.inputHandler);
     }
 
     create(){
-        this.loadTexture('player');
+        super.create();
         this.game.physics.arcade.enable(this);
 
         this.animations.add('left-walk', [7,6,5,4], 10, true);
@@ -38,8 +34,6 @@ class Player extends Phaser.Sprite{
         this.animations.add('right-walk', [15,14,13,12], 10, true);
         this.animations.add('left-idle',  [20,21,22,23,23,23,22,21,20], 3, true);
         this.animations.add('right-idle', [28,29,30,31,31,31,30,29,28], 3, true);
-
-        this.game.world.addChild(this);
 
         this.body.drag.x = 50;
         this.body.bounce.y = 0.2;
@@ -55,14 +49,7 @@ class Player extends Phaser.Sprite{
 
     turn(){
         if(this.game.time.now > this.turnTimer){
-            // console.log('turn');
-            if (this.facing == 'right'){
-                this.facing = 'left';
-            } else {
-                this.facing = 'right';
-            }
-            this.animations.play('turn-'+this.facing);
-
+            super.turn();
             this.turnTimer = this.game.time.now + MIN_TURN_TIME;
         }
     }

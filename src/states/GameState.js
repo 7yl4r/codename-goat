@@ -1,4 +1,4 @@
-import Player from 'objects/Player';
+import Player from 'objects/Characters/Player';
 import Obstacle from 'objects/Obstacle';
 import Background from 'objects/Background';
 import ActionSelectorHUD from 'objects/ActionSelectorHUD';
